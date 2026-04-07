@@ -24,12 +24,17 @@ while True:
             quit()
             sys.exit()
 
-    #desenhar a partir daqui
+    #desenhando casa
     draw.rect(window,(72, 157, 37), (0,620,1280,100))
     draw.rect(window,(255,192,203), (320,360,270,260))
     draw.polygon(window, (94, 33, 41),((320,360),(455,170),(590,360)))
     draw.rect(window,(121, 77, 27), (455,440,80,180))
+    draw.rect(window,(13, 23, 100), (353,480,67,100))
+    draw.circle(window,(0,0,0),(470,530),6)
 
+    #desenhando arvore
+    draw.rect(window, (120, 77, 26), (960,360,55,260))
+    draw.circle(window,(71, 156, 37),(987,400), 100)
     #desenhar imagens
     window.blit(cachorro_img,(700,450))
 
