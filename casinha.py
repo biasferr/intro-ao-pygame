@@ -10,19 +10,32 @@ cachorro_img = transform.scale(cachorro_img, (200,200))
 cachorro_font= font.Font("Shelter Coffee.otf", 40)
 
 #carregar musica
-# mixer.music.load(#arquivo da minha musica)
-# mixer.music.play(-1)
+mixer.music.load("still into you.mp3")
+mixer.music.play(-1)
+
 
 window = display.set_mode((1280,720))
 
 #definir cor pro fundo
 window.fill((151, 209, 250))
 
+nuvem_x= 750
+nuvem_y= 125
+velocidade_nuvem= 3
+
+
+
+
 while True:
     for ev in event.get():
         if ev.type == QUIT:
             quit()
             sys.exit()
+
+    window.fill((151, 209, 250))
+    #movimento da nuvem
+    nuvem_x += velocidade_nuvem
+
 
     #desenhando casa
     draw.rect(window,(72, 157, 37), (0,620,1280,100))
@@ -35,6 +48,19 @@ while True:
     #desenhando arvore
     draw.rect(window, (120, 77, 26), (960,360,55,260))
     draw.circle(window,(71, 156, 37),(987,400), 100)
+
+    #desenhar sol
+    draw.circle(window, (255,222,33), (150,125),(50))
+    draw.line(window,(255,222,33),(150,230), (150,20),(7))
+    draw.line(window,(255,222,33), (40,125), (260,125),(7))
+    draw.line(window, (255,222,33),(60,50), (220,200),(7))
+    draw.line(window, (255,222,33),(220,50), (60,200),(7))
+
+    #desenhar nuvem
+    draw.circle(window,(255,255,255),(nuvem_x,nuvem_y),50)
+    draw.circle(window,(255,255,255),(nuvem_x +60,nuvem_y),50)
+    draw.circle(window,(255,255,255),(nuvem_x +120,nuvem_y),50)
+
     #desenhar imagens
     window.blit(cachorro_img,(700,450))
 
