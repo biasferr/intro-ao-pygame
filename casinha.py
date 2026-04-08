@@ -10,7 +10,7 @@ cachorro_img = transform.scale(cachorro_img, (200,200))
 cachorro_font= font.Font("Shelter Coffee.otf", 40)
 
 #carregar musica
-mixer.music.load("still into you.mp3")
+mixer.music.load("still-into-you.mp3")
 mixer.music.play(-1)
 
 
@@ -21,7 +21,7 @@ window.fill((151, 209, 250))
 
 nuvem_x= 750
 nuvem_y= 125
-velocidade_nuvem= 3
+velocidade_nuvem= 1.5
 
 
 
@@ -32,11 +32,15 @@ while True:
             quit()
             sys.exit()
 
-    window.fill((151, 209, 250))
     #movimento da nuvem
+
     nuvem_x += velocidade_nuvem
 
+    if nuvem_x > 1280:
+        nuvem_x= -100
 
+    window.fill((151, 209, 250))
+    
     #desenhando casa
     draw.rect(window,(72, 157, 37), (0,620,1280,100))
     draw.rect(window,(255,192,203), (320,360,270,260))
