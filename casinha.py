@@ -15,32 +15,63 @@ mixer.music.play(-1)
 
 
 window = display.set_mode((1280,720))
+running = True
+clock= time.Clock()
 
 #definir cor pro fundo
 window.fill((151, 209, 250))
 
+
+#definir variáveis
 nuvem_x= 750
 nuvem_y= 125
-velocidade_nuvem= 1.5
-
-
-
+velocidade_nuvem= 100
+background_color= (151, 209, 250)
 
 while True:
+    clock.tick(60)
+
     for ev in event.get():
         if ev.type == QUIT:
             quit()
             sys.exit()
+        if ev.type == KEYDOWN:
+            tecla = ev.key
+            if background_color == (151,209,250):
+                if tecla == K_SPACE:
+                    background_color = (255, 177, 94)
+            elif background_color == (255, 177, 94):
+                if tecla == K_SPACE:
+                    background_color == (39, 17, 145)
+            elif background_color == (39, 17, 145):
+                if tecla == K_SPACE:
+                    background_color = (151,209,250)
+            
 
-    #movimento da nuvem
 
-    nuvem_x += velocidade_nuvem
+    window.fill(background_color)
 
-    if nuvem_x > 1280:
-        nuvem_x= -100
+    ##movimentos
+    dt= clock.get_time()/1000
+    keys= key.get_pressed()
 
-    window.fill((151, 209, 250))
+   
+    # if keys[K_RIGHT]:
+    #     nuvem_x = nuvem_x + velocidade_nuvem * dt
+    # elif keys[K_LEFT]:
+    #     nuvem_x= nuvem_x - velocidade_nuvem * dt
     
+    #movimento da nuvem
+    nuvem_x_ida = nuvem_x + velocidade_nuvem * dt
+    nuvem_x_volta = - (nuvem_x + velocidade_nuvem * dt)
+    if nuvem_x > 1050:
+        nuvem_x_volta
+
+    elif nuvem_x <50:
+        nuvem_x= 50
+    
+    
+    ##desenhos
     #desenhando casa
     draw.rect(window,(72, 157, 37), (0,620,1280,100))
     draw.rect(window,(255,192,203), (320,360,270,260))
@@ -62,8 +93,9 @@ while True:
 
     #desenhar nuvem
     draw.circle(window,(255,255,255),(nuvem_x,nuvem_y),50)
-    draw.circle(window,(255,255,255),(nuvem_x +60,nuvem_y),50)
-    draw.circle(window,(255,255,255),(nuvem_x +120,nuvem_y),50)
+    draw.circle(window,(255,255,255),(nuvem_x + 60,nuvem_y),50)
+    draw.circle(window,(255,255,255),(nuvem_x + 120,nuvem_y),50)
+    draw.circle(window,(255,255,255),(nuvem_x + 180,nuvem_y),50)
 
     #desenhar imagens
     window.blit(cachorro_img,(700,450))
