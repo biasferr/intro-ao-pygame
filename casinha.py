@@ -31,13 +31,17 @@ background_color= (151, 209, 250)
 sol_x= 150
 sol_y= 125
 velocidade_sol = 200
-manha = (151,209,250)
-tarde = (255, 177, 94)
-noite = (39, 17, 145)
+cor_manha = (151,209,250)
+cor_tarde = (255, 177, 94)
+cor_noite = (39, 17, 145)
 background_color = (151,209,250)
-estagio = 'manhã'
 
 
+
+audio_manha = mixer.Sound ("manhã.mp3")
+audio_tarde = mixer.Sound ("tarde.mp3")
+audio_noite = mixer.Sound ("noite.mp3")
+estado = 'teclado'
 
 while True:
     clock.tick(60)
@@ -48,70 +52,67 @@ while True:
             sys.exit()
         if ev.type == MOUSEBUTTONUP:
             if ev.button == 1:
+                #mudança de audio
+                
                 if estagio == 'manhã':
-                    mixer.music.load ("manhã.mp3")
-                    mixer.music.play(-1)
-                    estagio = 'tarde'
+                    audio_manha.play()
+                    
                 elif estagio == 'tarde':
-                    mixer.music.load ("tarde.mp3")
-                    mixer.music.play(-1)
-                    estagio = 'noite'
+                    audio_tarde.play()
+                    
                 elif estagio == 'noite':
-                    mixer.music.load ("noite.mp3")
-                    mixer.music.play (-1)
-                    estagio = 'manhã'
-
-        # if ev.type == KEYDOWN:
-        #     tecla = ev.key
-        #     if background_color == (151,209,250):
-        #         if tecla == K_SPACE:
-        #             background_color = (255, 177, 94)
-        #     elif background_color == (255, 177, 94):
-        #         if tecla == K_SPACE:
-        #             background_color == (39, 17, 145)
-        #     elif background_color == (39, 17, 145):
-        #         if tecla == K_SPACE:
-        #             background_color = (151,209,250)
+                    audio_noite.play()
+                    
+        if ev.type == KEYDOWN:
+            if ev.key == K_m:
+                if estado == 'mouse':
+                    estado = 'teclado'  
+                elif estado == 'teclado':
+                    estado = 'mouse'         
             
     
 
     ##movimentos
     dt= clock.get_time()/1000
     keys= key.get_pressed()
-    mousee = mouse.get_pressed()
-
-    # mudança de audio
+    # mousee = mouse.get_pressed()
+        #movimento sol
     
-
-    #movimento sol
-    if keys[K_RIGHT]:
-        if sol_x >= 1175:
-            sol_x= 1175
-        else: 
-            sol_x = sol_x + velocidade_sol * dt
-    elif keys[K_LEFT]:
-        if sol_x <= 100:
-            sol_x = 100
-        else:
-            sol_x= sol_x - velocidade_sol * dt
-    elif keys[K_UP]:
-        if sol_y <= 105:
-            sol_y= 105
-        else:
-            sol_y= sol_y - velocidade_sol * dt
-    elif keys[K_DOWN]:
-        if sol_y >= 740:
-            sol_y= 740
-        else:
-            sol_y= sol_y + velocidade_sol * dt
+    if estado == 'teclado': 
+        if keys[K_RIGHT]:
+            if sol_x >= 1175:
+                sol_x= 1175
+            else: 
+                sol_x = sol_x + velocidade_sol * dt
+        elif keys[K_LEFT]:
+            if sol_x <= 100:
+                sol_x = 100
+            else:
+                sol_x= sol_x - velocidade_sol * dt
+        elif keys[K_UP]:
+            if sol_y <= 105:
+                sol_y= 105
+            else:
+                sol_y= sol_y - velocidade_sol * dt
+        elif keys[K_DOWN]:
+            if sol_y >= 740:
+                sol_y= 740
+            else:
+                sol_y= sol_y + velocidade_sol * dt
+    elif estado == 'mouse':
+        sol_x, sol_y = mouse.get_pos()
+        
     
     #mudança de cor do céu
     if sol_y < 350:
-        background_color = manha
+        background_color = cor_manha
+        estagio = 'manhã'
     elif sol_y < 650:
-        background_color = tarde
+        background_color = cor_tarde
+        estagio = 'tarde'
     else:
-        background_color = noite 
+        background_color = cor_noite 
+        estagio = 'noite'
 
     #movimento da nuvem
     nuvem_x = nuvem_x + velocidade_nuvem * dt 
